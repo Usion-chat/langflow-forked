@@ -26,4 +26,5 @@ class IDGeneratorComponent(CustomComponent):
         }
 
     def build(self, unique_id: str) -> str:
+        print("We are out here")
         return unique_id

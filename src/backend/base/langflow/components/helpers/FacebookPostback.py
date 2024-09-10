@@ -5,8 +5,8 @@ from langflow.schema import Data
 
 
 class FacebookPostback(Component):
-    display_name = "Postback Action"
-    description = "Postback Action To Execute."
+    display_name = "Facebook Postback"
+    description = "Facebook Postback."
     icon = "merge"
     name = "FacebookPostback"
 
@@ -15,7 +15,13 @@ class FacebookPostback(Component):
             name="postback_actions",
             display_name="Postback Action List",
             info="Postback actions to execute",
-        )
+            is_list=True,
+        ),
+        MessageTextInput(
+            name="postback action name",
+            display_name="Postback Action Name",
+            info="Postback action name",
+        ),
     ]
 
     outputs = [

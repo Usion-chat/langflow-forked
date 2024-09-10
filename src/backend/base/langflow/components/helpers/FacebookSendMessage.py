@@ -1,5 +1,5 @@
 from langflow.custom import Component
-from langflow.io import MessageTextInput, Output, DataInput
+from langflow.io import MultilineInput, Output, DataInput
 from langflow.schema.message import Message
 from langflow.schema import Data
 
@@ -11,11 +11,16 @@ class FacebookSendMessage(Component):
     name = "FacebookSendMessage"
 
     inputs = [
-        MessageTextInput(
-            name="postback_actions",
-            display_name="Postback Action List",
-            info="Postback actions to execute",
-        )
+        MultilineInput(
+            name="message",
+            display_name="Message Text",
+            info="Send message text",
+        ),
+        IntInput(
+            name="action_order",
+            display_name="Action Order",
+            info="Action Order",
+        ),
     ]
 
     outputs = [

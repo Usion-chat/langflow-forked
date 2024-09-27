@@ -13,6 +13,7 @@ import PromptAreaComponent from "../promptComponent";
 import ToggleShadComponent from "../toggleShadComponent";
 import { RefreshParameterComponent } from "./component/refreshParameterComponent";
 import { StrRenderComponent } from "./component/strRenderComponent";
+import What from "../testInput";
 
 export function ParameterRenderComponent({
   handleOnNewValue,
@@ -57,6 +58,7 @@ export function ParameterRenderComponent({
         handleNodeClass={handleNodeClass}
         name={name}
       >
+        {console.log("templateData", templateData)}
         {TEXT_FIELD_TYPES.includes(templateData.type ?? "") ? (
           <StrRenderComponent
             templateData={templateData}
@@ -77,7 +79,14 @@ export function ParameterRenderComponent({
             onChange={onChange}
             id={`dict_${id}`}
           />
-        ) : templateData.type === "dict" ? (
+        ) : templateData.type === "TestInput" ? (
+          <What
+            onClick={() => console.log("test input")}
+            className="input-component-div">
+            123asd11
+          </What>
+        )
+        : templateData.type === "dict" ? (
           <KeypairListComponent
             disabled={disabled}
             editNode={editNode}

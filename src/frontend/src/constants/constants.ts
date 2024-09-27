@@ -649,6 +649,7 @@ export const LANGFLOW_SUPPORTED_TYPES = new Set([
   "int",
   "dict",
   "NestedDict",
+  "TestInput",
   "table",
 ]);
 

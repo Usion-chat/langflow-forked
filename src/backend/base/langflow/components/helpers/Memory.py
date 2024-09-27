@@ -41,7 +41,7 @@ class MemoryComponent(Component):
         IntInput(
             name="n_messages",
             display_name="Number of Messages",
-            value=100,
+            value=7,
             info="Number of messages to retrieve.",
             advanced=True,
         ),

@@ -16,6 +16,7 @@ class FieldTypes(str, Enum):
     BOOLEAN = "bool"
     DICT = "dict"
     NESTED_DICT = "NestedDict"
+    TEST_INPUT = "TestInput"
     FILE = "file"
     PROMPT = "prompt"
     OTHER = "other"

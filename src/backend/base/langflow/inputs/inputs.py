@@ -382,6 +382,21 @@ class NestedDictInput(BaseInputMixin, ListableInputMixin, MetadataTraceMixin, In
     field_type: SerializableFieldTypes = FieldTypes.NESTED_DICT
     value: dict | Data | None = {}
 
+class TestInput(BaseInputMixin, ListableInputMixin, MetadataTraceMixin, InputTraceMixin):
+    """
+    Represents a nested dictionary field.
+
+    This class represents a nested dictionary input and provides functionality for handling dictionary values.
+    It inherits from the `BaseInputMixin` and `ListableInputMixin` classes.
+
+    Attributes:
+        field_type (SerializableFieldTypes): The field type of the input. Defaults to FieldTypes.NESTED_DICT.
+        value (Optional[dict]): The value of the input. Defaults to an empty dictionary.
+    """
+
+    field_type: SerializableFieldTypes = FieldTypes.TEST_INPUT
+    value: dict | Data | None = {}
+
 
 class DictInput(BaseInputMixin, ListableInputMixin, InputTraceMixin):
     """
@@ -490,6 +505,7 @@ InputTypes = Union[
     MultilineInput,
     MultilineSecretInput,
     NestedDictInput,
+    TestInput,
     PromptInput,
     SecretStrInput,
     StrInput,

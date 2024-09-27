@@ -11,6 +11,7 @@ _convert_field_type_to_type: dict[FieldTypes, type] = {
     FieldTypes.BOOLEAN: bool,
     FieldTypes.DICT: dict,
     FieldTypes.NESTED_DICT: dict,
+    FieldTypes.TEST_INPUT: str,
     FieldTypes.TABLE: dict,
     FieldTypes.FILE: str,
     FieldTypes.PROMPT: str,

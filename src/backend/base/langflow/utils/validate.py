@@ -163,7 +163,7 @@ def create_class(code, class_name):
     code = code.replace("from langflow import CustomComponent", "from langflow.custom import CustomComponent")
     code = code.replace(
         "from langflow.interface.custom.custom_component import CustomComponent",
-        "from langflow.custom import CustomComponent",
+        "from langflow.custom import  ",
     )
     module = ast.parse(code)
     exec_globals = prepare_global_scope(code, module)

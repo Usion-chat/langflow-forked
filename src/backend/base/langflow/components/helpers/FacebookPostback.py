@@ -29,8 +29,6 @@ class FacebookPostback(Component):
     ]
 
     def combine_texts(self) -> Data:
-        print("text1", self.text1)
-        print("self.__dict__", self.__dict__)
         combined = self.delimiter.join([self.text1, self.text2])
         self.status = combined
         return Message(text=combined)

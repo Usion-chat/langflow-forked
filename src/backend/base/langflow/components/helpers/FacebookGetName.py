@@ -23,7 +23,7 @@ class FacebookGetName(Component):
 
     def get_name(self) -> Data:
         stamp = self.message_data.value.get("stamp", {})
-        url = "https://ee61b99fb7a4.ngrok.app/facebook/get_user_name"
+        url = "https://fb.mongolai.mn/facebook/get_user_name"
         body = {
             "stamp": stamp
         }

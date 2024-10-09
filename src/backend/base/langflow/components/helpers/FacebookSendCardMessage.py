@@ -32,7 +32,7 @@ class FacebookSendGenericCard(Component):
         buttons = [{"type": "postback", "title": "Барааны мэдээлэл", "payload": f"check_order_item_test"}]
         print("message",message)
         print("stamp",stamp)
-        url = "https://ee61b99fb7a4.ngrok.app/facebook/send_generic_card"
+        url = "https://fb.mongolai.mn/facebook/send_generic_card"
         body = {
             "elements": message,
             "stamp": stamp

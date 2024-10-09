@@ -31,7 +31,7 @@ class FacebookSendMessage(Component):
         # print("message",message)
         # print("stamp",stamp)
         # url = f"https://fb.mongolai.mn/facebook/send_message"
-        url = "https://ee61b99fb7a4.ngrok.app/facebook/send_message"
+        url = "https://fb.mongolai.mn/facebook/send_message"
         body = {
             "message": message,
             "stamp": stamp

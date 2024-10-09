@@ -22,7 +22,7 @@ class AssignToHumanAgent(Component):
 
     def change_user_status(self) -> Data:
         stamp = self.message_data.value.get("stamp", {})
-        url = "https://ee61b99fb7a4.ngrok.app/facebook/change_user_status"
+        url = "https://fb.mongolai.mn/facebook/change_user_status"
         
         body = {
             "key": "assigned_to_bot",

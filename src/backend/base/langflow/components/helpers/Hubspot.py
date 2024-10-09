@@ -26,7 +26,7 @@ class HubspotAssignUser(Component):
 
     def get_name(self) -> Data:
         stamp = self.message_data.value.get("stamp", {})
-        url = "https://ee61b99fb7a4.ngrok.app/hubspot/assign-to-least-busy"
+        url = "https://fb.mongolai.mn/hubspot/assign-to-least-busy"
         
         # Prepare the request body
         body = {

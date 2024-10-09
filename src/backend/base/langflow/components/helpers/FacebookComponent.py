@@ -114,7 +114,7 @@ class FacebookComponent(Component):
             if start_button and greeting:
                 print("Page info is updated")
                 body = {"langflow_id": self.graph.flow_id, "new_info": {"greeting_message_set": True, "greeting_message": self.greeting_message}}
-                self.make_post_request("https://ee61b99fb7a4.ngrok.app/set_info/set_page_info", body)
+                self.make_post_request("https://fb.mongolai.mn/set_info/set_page_info", body)
 
         transformed_menu = []
 
@@ -135,7 +135,7 @@ class FacebookComponent(Component):
             if menu_items:
                 print("User info is updated")
                 body = {"langflow_id": self.graph.flow_id, "new_info": {"menu_items_set":True, "menu_items": transformed_menu}, "user_id": user_id}
-                self.make_post_request("https://ee61b99fb7a4.ngrok.app/set_info/set_user_info", body)
+                self.make_post_request("https://fb.mongolai.mn/set_info/set_user_info", body)
             
         # print("Greeting message", self.greeting_message)
         # print("Menu items", self.menu_items)

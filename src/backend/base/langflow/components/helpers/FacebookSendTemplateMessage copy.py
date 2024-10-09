@@ -4,11 +4,11 @@ from langflow.schema.message import Message
 from langflow.schema import Data
 
 
-class FacebookSendMessage(Component):
-    display_name = "Facebook Send Text Message"
-    description = "Send a text facebook message to the user."
+class FacebookSendTemplateMessage(Component):
+    display_name = "Facebook Send Template Message"
+    description = "Send a template facebook message to the user."
     icon = "merge"
-    name = "FacebookSendMessage"
+    name = "FacebookSendTemplateMessage"
 
     inputs = [
         MultilineInput(name="message_default", display_name="Message Default", info="Default message to send"),
@@ -19,25 +19,25 @@ class FacebookSendMessage(Component):
         )
     ]
 
-    outputs = [Output(display_name="Message", name="message_output", method="send_facebook_message")]
+    outputs = [Output(display_name="Message", name="message_output", method="send_template_message")]
 
-    def send_facebook_message(self) -> Data:
-        # print("self.message_data", self.message_data)
-        # print("self.message_data.value", self.message_data.value)
+    def send_template_message(self) -> Data:
         message = self.message_data.value.get("send_message")
+        print("messageOriginal",message)
         stamp = self.message_data.value.get("stamp", {})
         if self.message_default:
             message = self.message_default
-        # print("message",message)
-        # print("stamp",stamp)
-        # url = f"https://fb.mongolai.mn/facebook/send_message"
-        url = "https://ee61b99fb7a4.ngrok.app/facebook/send_message"
+
+        buttons = [{"type": "postback", "title": "Барааны мэдээлэл", "payload": f"check_order_item_test"}]
+        print("message",message)
+        print("stamp",stamp)
+        url = "https://ee61b99fb7a4.ngrok.app/facebook/send_template_message"
         body = {
-            "message": message,
+            "text": message,
+            "buttons": buttons,
             "stamp": stamp
         }
         response = requests.post(url, json=body)
-        print("response.json()", response.json())
         return self.message_data
         # return response.json()
 

@@ -114,9 +114,7 @@ class FacebookComponent(Component):
             if start_button and greeting:
                 print("Page info is updated")
                 body = {"langflow_id": self.graph.flow_id, "new_info": {"greeting_message_set": True, "greeting_message": self.greeting_message}}
-                self.make_post_request("http://d899195b24d5.ngrok.app/set_info/set_page_info", body)
-        else:
-            print("page It is already set")
+                self.make_post_request("https://ee61b99fb7a4.ngrok.app/set_info/set_page_info", body)
 
         transformed_menu = []
 
@@ -131,14 +129,13 @@ class FacebookComponent(Component):
             print("Error transforming menu items:", e)
 
         if not menu_items_set or already_set_menu_items != transformed_menu:
+            print("menu items are not set")
             #loop through menu items and "type": "postback",
             menu_items = self.set_menu_items(data.get("user_info", {}), data.get("page_info", {}), transformed_menu)
             if menu_items:
                 print("User info is updated")
                 body = {"langflow_id": self.graph.flow_id, "new_info": {"menu_items_set":True, "menu_items": transformed_menu}, "user_id": user_id}
-                self.make_post_request("https://d899195b24d5.ngrok.app/set_info/set_user_info", body)
-        else:
-            print("user It is already set")
+                self.make_post_request("https://ee61b99fb7a4.ngrok.app/set_info/set_user_info", body)
             
         # print("Greeting message", self.greeting_message)
         # print("Menu items", self.menu_items)
@@ -146,7 +143,7 @@ class FacebookComponent(Component):
     def postback(self) -> Data:
         data = ast.literal_eval(self.user_input)
         if self.is_postback(data):
-            print("This is postback data", data)
+            self.check_inputs(data)
             data["function"] = {"name": data["event"]["postback"]["payload"]}
             data["type"] = "FACEBOOK"
             return Data(value=data)
@@ -157,9 +154,8 @@ class FacebookComponent(Component):
     def message(self) -> Data:
         data = ast.literal_eval(self.user_input)
         if self.is_message(data):
-            print("This is message data", data)
-            data["chat_history"] = self.format_chat_history(self.langflow_message_history)
-            data["type"] = "FACEBOOK"
+            self.check_inputs(data)
+            print("data", data)
             return Data(value=data)
         else:
             self.stop("facebook_message")

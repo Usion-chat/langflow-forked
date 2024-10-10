@@ -39,6 +39,21 @@ class LCModelComponent(Component):
     def _get_exception_message(self, e: Exception):
         return str(e)
 
+    def _extract_status_code(self, exception: Exception):
+        """
+        Try to extract status code from exception object.
+        """
+        status_code = None
+        if hasattr(exception, 'response'):
+            response = exception.response
+            if hasattr(response, 'status_code'):
+                status_code = response.status_code
+        elif hasattr(exception, 'status_code'):
+            status_code = exception.status_code
+        elif hasattr(exception, 'http_status'):
+            status_code = exception.http_status
+        return status_code
+
     def _validate_outputs(self):
         # At least these two outputs must be defined
         required_output_methods = ["text_response", "build_model"]
@@ -79,9 +94,13 @@ class LCModelComponent(Component):
                 self.status = result
             return result
         except Exception as e:
-            if message := self._get_exception_message(e):
-                raise ValueError(message) from e
-            raise e
+            status_code = self._extract_status_code(e)
+            if status_code and status_code != 200:
+                raise Exception("Internal Server Error Detected") from e
+            else:
+                if message := self._get_exception_message(e):
+                    raise ValueError(message) from e
+                raise e
 
     def build_status_message(self, message: AIMessage):
         """
@@ -185,12 +204,18 @@ class LCModelComponent(Component):
                     self.status = result
                 return result
         except Exception as e:
-            if message := self._get_exception_message(e):
-                raise ValueError(message) from e
-            raise e
+            status_code = self._extract_status_code(e)
+            if status_code and status_code != 200:
+                raise Exception("Internal Server Error Detected") from e
+            else:
+                if message := self._get_exception_message(e):
+                    raise ValueError(message) from e
+                raise e
 
     @abstractmethod
     def build_model(self) -> LanguageModel:  # type: ignore[type-var]
         """
         Implement this method to build the model.
-        """
+        ```
+        Now, when the request status is not 200, the code will raise an exception with the message "Internal Server Error Detected".
+

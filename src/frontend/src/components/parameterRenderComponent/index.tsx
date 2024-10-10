@@ -58,7 +58,6 @@ export function ParameterRenderComponent({
         handleNodeClass={handleNodeClass}
         name={name}
       >
-        {console.log("templateData", templateData)}
         {TEXT_FIELD_TYPES.includes(templateData.type ?? "") ? (
           <StrRenderComponent
             templateData={templateData}

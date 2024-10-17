@@ -113,7 +113,7 @@ class FacebookComponent(Component):
             greeting = self.set_greeting_message(data.get("page_info", {}))
             if start_button and greeting:
                 print("Page info is updated")
-                body = {"langflow_id": self.graph.flow_id, "new_info": {"greeting_message_set": True, "greeting_message": self.greeting_message}}
+                body = {"langflow_id": self.graph.flow_id, "new_info": {"greeting_message_set": True, "greeting_message": self.greeting_message, page_id: data.get("page_info", {}).get("page_id")}}
                 self.make_post_request("https://fb.mongolai.mn/set_info/set_page_info", body)
 
         transformed_menu = []
@@ -134,7 +134,7 @@ class FacebookComponent(Component):
             menu_items = self.set_menu_items(data.get("user_info", {}), data.get("page_info", {}), transformed_menu)
             if menu_items:
                 print("User info is updated")
-                body = {"langflow_id": self.graph.flow_id, "new_info": {"menu_items_set":True, "menu_items": transformed_menu}, "user_id": user_id}
+                body = {"langflow_id": self.graph.flow_id, "new_info": {"menu_items_set":True, "menu_items": transformed_menu}, "user_id": user_id, "page_id": data.get("page_info", {}).get("page_id")}
                 self.make_post_request("https://fb.mongolai.mn/set_info/set_user_info", body)
             
         # print("Greeting message", self.greeting_message)
@@ -155,7 +155,6 @@ class FacebookComponent(Component):
         data = ast.literal_eval(self.user_input)
         if self.is_message(data):
             self.check_inputs(data)
-            print("data", data)
             return Data(value=data)
         else:
             self.stop("facebook_message")

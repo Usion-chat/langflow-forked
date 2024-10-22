@@ -1,341 +1,3 @@
-// import { useEffect, useState } from "react";
-// import IconComponent from "../../components/genericIconComponent";
-// import { Button } from "../../components/ui/button";
-// import BaseModal from "../baseModal";
-
-// export default function MyTextModal({
-//   value,
-//   setValue,
-//   children,
-//   disabled,
-//   readonly = false,
-// }: any): JSX.Element {
-//   const [modalOpen, setModalOpen] = useState(false);
-//   const [inputValue, setInputValue] = useState(value);
-//   const [cards, setCards] = useState([{ id: 1, buttonSections: [], showExtraFields: false, webviewHeightRatio: 'tall' }]); // Cards with Button sections
-
-//   useEffect(() => {
-//     if (typeof value === "string") setInputValue(value);
-//   }, [value, modalOpen]);
-
-
-//   //log every time the input value changes
-//   useEffect(() => {
-//     console.log(inputValue);
-//   }, [inputValue]);
-
-//   // Function to handle adding a new card
-//   const handleAddCard = () => {
-//     const newCard = {
-//       id: cards.length + 1,
-//       buttonSections: [],
-//       showExtraFields: false, 
-//       webviewHeightRatio: 'tall', // Default value for the ratio
-//     };
-//     setCards([...cards, newCard]);
-//   };
-
-//   // Function to handle adding a button section within a card
-//   const handleAddButtonSection = (cardIndex: number) => {
-//     const updatedCards = cards.map((card, index) => {
-//       if (index === cardIndex) {
-//         return {
-//           ...card,
-//           buttonSections: [...card.buttonSections, { id: card.buttonSections.length + 1, type: "web_url" }],
-//         };
-//       }
-//       return card;
-//     });
-//     setCards(updatedCards);
-//   };
-
-//   // Function to handle removing a card
-//   const handleRemoveCard = (cardIndex: number) => {
-//     setCards(cards.filter((_, index) => index !== cardIndex));
-//   };
-
-//   // Function to handle removing a button section within a card
-//   const handleRemoveButtonSection = (cardIndex: number, sectionIndex: number) => {
-//     const updatedCards = cards.map((card, index) => {
-//       if (index === cardIndex) {
-//         const updatedSections = card.buttonSections.filter((_, sIndex) => sIndex !== sectionIndex);
-//         return { ...card, buttonSections: updatedSections };
-//       }
-//       return card;
-//     });
-//     setCards(updatedCards);
-//   };
-
-//   const handleTypeChange = (cardIndex: number, sectionIndex: number, newType: string) => {
-//     const updatedCards = cards.map((card, index) => {
-//       if (index === cardIndex) {
-//         const updatedSections = card.buttonSections.map((section, sIndex) => {
-//           if (sIndex === sectionIndex) {
-//             return { ...section, type: newType };
-//           }
-//           return section;
-//         });
-//         return { ...card, buttonSections: updatedSections };
-//       }
-//       return card;
-//     });
-//     setCards(updatedCards);
-//   };
-
-//   // Function to handle checkbox toggle for extra fields
-//   const handleCheckboxToggle = (cardIndex: number) => {
-//     const updatedCards = cards.map((card, index) => {
-//       if (index === cardIndex) {
-//         return { ...card, showExtraFields: !card.showExtraFields };
-//       }
-//       return card;
-//     });
-//     setCards(updatedCards);
-//   };
-
-//   // Function to handle webview height ratio change
-//   const handleWebviewHeightRatioChange = (cardIndex: number, ratio: string) => {
-//     const updatedCards = cards.map((card, index) => {
-//       if (index === cardIndex) {
-//         return { ...card, webviewHeightRatio: ratio };
-//       }
-//       return card;
-//     });
-//     setCards(updatedCards);
-//   };
-
-//   return (
-//     <BaseModal
-//       onChangeOpenModal={(open) => {}}
-//       open={modalOpen}
-//       setOpen={setModalOpen}
-//       size="x-large"
-//     >
-//       <BaseModal.Trigger disable={disabled} asChild>
-//         {children}
-//       </BaseModal.Trigger>
-//       <BaseModal.Header description="Edit Text">
-//         <div className="flex w-full items-start gap-3">
-//           <div className="flex">
-//             <span className="pr-2" data-testid="modal-title">
-//               Edit Text
-//             </span>
-//             <IconComponent
-//               name={"FileText"}
-//               className="h-6 w-6 pl-1 text-primary"
-//               aria-hidden="true"
-//             />
-//           </div>
-//         </div>
-//       </BaseModal.Header>
-
-//       <BaseModal.Content overflowHidden>
-//         <div className="flex h-full w-full rounded-lg border p-4 overflow-y-auto max-h-[70vh]">
-//           {/* Card Section */}
-//           <div className="flex flex-col w-full space-y-4">
-//             {cards.map((card, cardIndex) => (
-//               <div key={card.id} className="relative flex flex-col space-y-4 p-4 border rounded-lg">
-//                 {/* X Button to Remove the Card */}
-//                 <button
-//                   className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
-//                   onClick={() => handleRemoveCard(cardIndex)}
-//                 >
-//                   X
-//                 </button>
-
-//                 {/* Card Header */}
-//                 <div className="flex justify-between items-center">
-//                   <a href="#" className="text-blue-500 underline">
-//                     Card {cardIndex + 1}
-//                   </a>
-//                 </div>
-
-//                 {/* Static Card Section: 3 Span text and 3 Input fields */}
-//                 <div className="flex flex-col space-y-2">
-//                   <div className="flex items-center space-x-2">
-//                     <span className="w-1/4 font-semibold">Гарчиг</span>
-//                     <input
-//                       type="text"
-//                       className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                       placeholder="Enter text"
-//                     />
-//                   </div>
-//                   <div className="flex items-center space-x-2">
-//                     <span className="w-1/4 font-semibold">Зургийн холбоос</span>
-//                     <input
-//                       type="text"
-//                       className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                       placeholder="Enter text"
-//                     />
-//                   </div>
-//                   <div className="flex items-center space-x-2">
-//                     <span className="w-1/4 font-semibold">Дэд гарчиг</span>
-//                     <input
-//                       type="text"
-//                       className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                       placeholder="Enter text"
-//                     />
-//                   </div>
-//                 </div>
-
-//                 {/* Checkbox to Toggle Extra Fields */}
-//                 <div className="flex items-center space-x-2">
-//                   <input
-//                     type="checkbox"
-//                     checked={card.showExtraFields}
-//                     onChange={() => handleCheckboxToggle(cardIndex)}
-//                   />
-//                   <span>Show Extra Fields</span>
-//                 </div>
-
-//                 {/* Conditionally render extra fields if checkbox is checked */}
-//                 {card.showExtraFields && (
-//                   <div className="flex flex-col space-y-2">
-//                     <div className="flex items-center space-x-2">
-//                       <span className="w-1/4 font-semibold">type</span>
-//                       <input
-//                         type="text"
-//                         className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                         placeholder="Enter text"
-//                       />
-//                     </div>
-//                     <div className="flex items-center space-x-2">
-//                       <span className="w-1/4 font-semibold">url</span>
-//                       <input
-//                         type="text"
-//                         className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                         placeholder="Enter text"
-//                       />
-//                     </div>
-
-//                     {/* Webview Height Ratio (Switcher between 'tall' and 'short') */}
-//                     <div className="flex items-center space-x-2">
-//                       <span className="w-1/4 font-semibold">Webview Height Ratio</span>
-//                       <select
-//                         className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                         value={card.webviewHeightRatio}
-//                         onChange={(e) => handleWebviewHeightRatioChange(cardIndex, e.target.value)}
-//                       >
-//                         <option value="tall">Tall</option>
-//                         <option value="short">Short</option>
-//                       </select>
-//                     </div>
-//                   </div>
-//                 )}
-
-//                 {/* "Buttons:" Section */}
-//                 <div className="flex flex-col space-y-2">
-//                   <span className="font-semibold">Buttons:</span>
-
-//                   {/* Dynamically Added Button Fields */}
-//                   {card.buttonSections.map((section, sectionIndex) => (
-//                     <div key={section.id} className="flex items-center justify-between">
-//                       <div className="flex-1">
-//                         <div className="flex items-center space-x-2">
-//                           <span className="w-1/4 font-semibold">type</span>
-//                           <select
-//                             className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                             value={section.type}
-//                             onChange={(e) => handleTypeChange(cardIndex, sectionIndex, e.target.value)}
-//                           >
-//                             <option value="web_url">Web URL</option>
-//                             <option value="postback">Postback</option>
-//                           </select>
-//                         </div>
-//                         {/* Conditionally render fields based on the selected type */}
-//                         {section.type === "web_url" ? (
-//                           <>
-//                             <div className="flex items-center space-x-2">
-//                               <span className="w-1/4 font-semibold">url</span>
-//                               <input
-//                                 type="text"
-//                                 className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                                 placeholder="Enter URL"
-//                               />
-//                             </div>
-//                             <div className="flex items-center space-x-2">
-//                               <span className="w-1/4 font-semibold">title</span>
-//                               <input
-//                                 type="text"
-//                                 className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                                 placeholder="Enter title"
-//                               />
-//                             </div>
-//                           </>
-//                         ) : (
-//                           <>
-//                             <div className="flex items-center space-x-2">
-//                               <span className="w-1/4 font-semibold">title</span>
-//                               <input
-//                                 type="text"
-//                                 className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                                 placeholder="Enter title"
-//                               />
-//                             </div>
-//                             <div className="flex items-center space-x-2">
-//                               <span className="w-1/4 font-semibold">payload</span>
-//                               <input
-//                                 type="text"
-//                                 className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-//                                 placeholder="Enter payload"
-//                               />
-//                             </div>
-//                           </>
-//                         )}
-//                       </div>
-
-//                       {/* X Button */}
-//                       <button
-//                         className="bg-red-800 text-white p-1 rounded-full w-6 h-6 flex items-center justify-center ml-2"
-//                         onClick={() => handleRemoveButtonSection(cardIndex, sectionIndex)}
-//                       >
-//                         X
-//                       </button>
-//                     </div>
-//                   ))}
-//                 </div>
-
-//                 {/* Add Button Section */}
-//                 <div className="flex justify-end mt-4">
-//                   <button
-//                     className="bg-gray-200 p-2 rounded-full"
-//                     onClick={() => handleAddButtonSection(cardIndex)}
-//                   >
-//                     <span className="text-black font-bold text-xl">+</span>
-//                   </button>
-//                 </div>
-//               </div>
-//             ))}
-
-//             {/* Add Card Button */}
-//             <div className="flex justify-center mt-4">
-//               <button className="bg-gray-200 p-3 rounded-full" onClick={handleAddCard}>
-//                 <span className="text-black font-bold text-xl">+</span>
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       </BaseModal.Content>
-
-//       <BaseModal.Footer>
-//         <div className="flex w-full shrink-0 items-end justify-end">
-//           <Button
-//             data-testid="genericModalBtnSave"
-//             id="genericModalBtnSave"
-//             disabled={readonly}
-//             onClick={() => {
-//               setValue(inputValue);
-//               setModalOpen(false);
-//             }}
-//             type="submit"
-//           >
-//             Finish Editing
-//           </Button>
-//         </div>
-//       </BaseModal.Footer>
-//     </BaseModal>
-//   );
-// }
 import { useEffect, useState } from "react";
 import IconComponent from "../../components/genericIconComponent";
 import { Button } from "../../components/ui/button";
@@ -349,18 +11,18 @@ export default function MyTextModal({
   readonly = false,
 }: any): JSX.Element {
   const [modalOpen, setModalOpen] = useState(false);
+
   const [cards, setCards] = useState([
     {
-      id: 1,
-      buttonSections: [],
-      showExtraFields: false,
-      webviewHeightRatio: 'tall',
+      buttons: [],
       title: '',
-      imageLink: '',
+      image_url: '',
       subtitle: '',
-      extraFields: {
-        type: '',
+      showDefaultAction: false,
+      default_action: {
+        type: 'web_url',
         url: '',
+        webview_height_ratio: 'TALL',
       },
     },
   ]);
@@ -368,32 +30,30 @@ export default function MyTextModal({
   // Function to handle adding a new card
   const handleAddCard = () => {
     const newCard = {
-      id: cards.length + 1,
-      buttonSections: [],
-      showExtraFields: false,
-      webviewHeightRatio: 'tall',
+      buttons: [],
       title: '',
-      imageLink: '',
+      image_url: '',
       subtitle: '',
-      extraFields: {
-        type: '',
+      showDefaultAction: false,
+      default_action: {
+        type: 'web_url',
         url: '',
+        webview_height_ratio: 'TALL',
       },
     };
     setCards([...cards, newCard]);
   };
 
-  // Function to handle adding a button section within a card
-  const handleAddButtonSection = (cardIndex: number) => {
+  // Function to handle adding a button within a card
+  const handleAddButton = (cardIndex: number) => {
     const updatedCards = cards.map((card, index) => {
       if (index === cardIndex) {
         return {
           ...card,
-          buttonSections: [
-            ...card.buttonSections,
+          buttons: [
+            ...card.buttons,
             {
-              id: card.buttonSections.length + 1,
-              type: "web_url",
+              type: 'web_url',
               url: '',
               title: '',
               payload: '',
@@ -411,50 +71,40 @@ export default function MyTextModal({
     setCards(cards.filter((_, index) => index !== cardIndex));
   };
 
-  // Function to handle removing a button section within a card
-  const handleRemoveButtonSection = (cardIndex: number, sectionIndex: number) => {
+  // Function to handle removing a button within a card
+  const handleRemoveButton = (cardIndex: number, buttonIndex: number) => {
     const updatedCards = cards.map((card, index) => {
       if (index === cardIndex) {
-        const updatedSections = card.buttonSections.filter((_, sIndex) => sIndex !== sectionIndex);
-        return { ...card, buttonSections: updatedSections };
+        const updatedButtons = card.buttons.filter((_, bIndex) => bIndex !== buttonIndex);
+        return { ...card, buttons: updatedButtons };
       }
       return card;
     });
     setCards(updatedCards);
   };
 
-  const handleTypeChange = (cardIndex: number, sectionIndex: number, newType: string) => {
+  // Function to handle type change of a button
+  const handleTypeChange = (cardIndex: number, buttonIndex: number, newType: string) => {
     const updatedCards = cards.map((card, index) => {
       if (index === cardIndex) {
-        const updatedSections = card.buttonSections.map((section, sIndex) => {
-          if (sIndex === sectionIndex) {
-            return { ...section, type: newType };
+        const updatedButtons = card.buttons.map((button, bIndex) => {
+          if (bIndex === buttonIndex) {
+            return { ...button, type: newType };
           }
-          return section;
+          return button;
         });
-        return { ...card, buttonSections: updatedSections };
+        return { ...card, buttons: updatedButtons };
       }
       return card;
     });
     setCards(updatedCards);
   };
 
-  // Function to handle checkbox toggle for extra fields
-  const handleCheckboxToggle = (cardIndex: number) => {
+  // Function to toggle showDefaultAction
+  const handleToggleDefaultAction = (cardIndex: number) => {
     const updatedCards = cards.map((card, index) => {
       if (index === cardIndex) {
-        return { ...card, showExtraFields: !card.showExtraFields };
-      }
-      return card;
-    });
-    setCards(updatedCards);
-  };
-
-  // Function to handle webview height ratio change
-  const handleWebviewHeightRatioChange = (cardIndex: number, ratio: string) => {
-    const updatedCards = cards.map((card, index) => {
-      if (index === cardIndex) {
-        return { ...card, webviewHeightRatio: ratio };
+        return { ...card, showDefaultAction: !card.showDefaultAction };
       }
       return card;
     });
@@ -491,7 +141,10 @@ export default function MyTextModal({
           {/* Card Section */}
           <div className="flex flex-col w-full space-y-4">
             {cards.map((card, cardIndex) => (
-              <div key={card.id} className="relative flex flex-col space-y-4 p-4 border rounded-lg">
+              <div
+                key={cardIndex}
+                className="relative flex flex-col space-y-4 p-4 border rounded-lg"
+              >
                 {/* X Button to Remove the Card */}
                 <button
                   className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
@@ -507,14 +160,14 @@ export default function MyTextModal({
                   </a>
                 </div>
 
-                {/* Static Card Section: 3 Span text and 3 Input fields */}
+                {/* Static Card Section: Title, Image URL, Subtitle */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex items-center space-x-2">
-                    <span className="w-1/4 font-semibold">Гарчиг</span>
+                    <span className="w-1/4 font-semibold">Title</span>
                     <input
                       type="text"
                       className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                      placeholder="Enter text"
+                      placeholder="Enter title"
                       value={card.title}
                       onChange={(e) => {
                         const updatedCards = cards.map((c, index) => {
@@ -528,16 +181,16 @@ export default function MyTextModal({
                     />
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="w-1/4 font-semibold">Зургийн холбоос</span>
+                    <span className="w-1/4 font-semibold">Image URL</span>
                     <input
                       type="text"
                       className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                      placeholder="Enter text"
-                      value={card.imageLink}
+                      placeholder="Enter image URL"
+                      value={card.image_url}
                       onChange={(e) => {
                         const updatedCards = cards.map((c, index) => {
                           if (index === cardIndex) {
-                            return { ...c, imageLink: e.target.value };
+                            return { ...c, image_url: e.target.value };
                           }
                           return c;
                         });
@@ -546,11 +199,11 @@ export default function MyTextModal({
                     />
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="w-1/4 font-semibold">Дэд гарчиг</span>
+                    <span className="w-1/4 font-semibold">Subtitle</span>
                     <input
                       type="text"
                       className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                      placeholder="Enter text"
+                      placeholder="Enter subtitle"
                       value={card.subtitle}
                       onChange={(e) => {
                         const updatedCards = cards.map((c, index) => {
@@ -565,32 +218,32 @@ export default function MyTextModal({
                   </div>
                 </div>
 
-                {/* Checkbox to Toggle Extra Fields */}
-                <div className="flex items-center space-x-2">
+                {/* Checkbox to Toggle Default Action */}
+                <div className="flex items-center space-x-2 mt-2">
                   <input
                     type="checkbox"
-                    checked={card.showExtraFields}
-                    onChange={() => handleCheckboxToggle(cardIndex)}
+                    checked={card.showDefaultAction}
+                    onChange={() => handleToggleDefaultAction(cardIndex)}
                   />
-                  <span>Show Extra Fields</span>
+                  <span>Include Default Action</span>
                 </div>
 
-                {/* Conditionally render extra fields if checkbox is checked */}
-                {card.showExtraFields && (
-                  <div className="flex flex-col space-y-2">
+                {/* Conditionally Render Default Action Fields */}
+                {card.showDefaultAction && (
+                  <div className="flex flex-col space-y-2 mt-2">
                     <div className="flex items-center space-x-2">
-                      <span className="w-1/4 font-semibold">type</span>
+                      <span className="w-1/4 font-semibold">Default Action Type</span>
                       <input
                         type="text"
                         className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                        placeholder="Enter text"
-                        value={card.extraFields.type}
+                        placeholder="Enter action type"
+                        value={card.default_action.type}
                         onChange={(e) => {
                           const updatedCards = cards.map((c, index) => {
                             if (index === cardIndex) {
                               return {
                                 ...c,
-                                extraFields: { ...c.extraFields, type: e.target.value },
+                                default_action: { ...c.default_action, type: e.target.value },
                               };
                             }
                             return c;
@@ -600,18 +253,18 @@ export default function MyTextModal({
                       />
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className="w-1/4 font-semibold">url</span>
+                      <span className="w-1/4 font-semibold">Default Action URL</span>
                       <input
                         type="text"
                         className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                        placeholder="Enter text"
-                        value={card.extraFields.url}
+                        placeholder="Enter action URL"
+                        value={card.default_action.url}
                         onChange={(e) => {
                           const updatedCards = cards.map((c, index) => {
                             if (index === cardIndex) {
                               return {
                                 ...c,
-                                extraFields: { ...c.extraFields, url: e.target.value },
+                                default_action: { ...c.default_action, url: e.target.value },
                               };
                             }
                             return c;
@@ -620,63 +273,76 @@ export default function MyTextModal({
                         }}
                       />
                     </div>
-
-                    {/* Webview Height Ratio (Switcher between 'tall' and 'short') */}
                     <div className="flex items-center space-x-2">
                       <span className="w-1/4 font-semibold">Webview Height Ratio</span>
                       <select
                         className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                        value={card.webviewHeightRatio}
-                        onChange={(e) => handleWebviewHeightRatioChange(cardIndex, e.target.value)}
+                        value={card.default_action.webview_height_ratio}
+                        onChange={(e) => {
+                          const updatedCards = cards.map((c, index) => {
+                            if (index === cardIndex) {
+                              return {
+                                ...c,
+                                default_action: {
+                                  ...c.default_action,
+                                  webview_height_ratio: e.target.value,
+                                },
+                              };
+                            }
+                            return c;
+                          });
+                          setCards(updatedCards);
+                        }}
                       >
-                        <option value="tall">Tall</option>
-                        <option value="short">Short</option>
+                        <option value="FULL">FULL</option>
+                        <option value="TALL">TALL</option>
+                        <option value="COMPACT">COMPACT</option>
                       </select>
                     </div>
                   </div>
                 )}
 
-                {/* "Buttons:" Section */}
-                <div className="flex flex-col space-y-2">
+                {/* Buttons Section */}
+                <div className="flex flex-col space-y-2 mt-4">
                   <span className="font-semibold">Buttons:</span>
 
                   {/* Dynamically Added Button Fields */}
-                  {card.buttonSections.map((section, sectionIndex) => (
-                    <div key={section.id} className="flex items-center justify-between">
+                  {card.buttons.map((button, buttonIndex) => (
+                    <div key={buttonIndex} className="flex items-center justify-between">
                       <div className="flex-1">
+                        {/* Type Selection */}
                         <div className="flex items-center space-x-2">
-                          <span className="w-1/4 font-semibold">type</span>
+                          <span className="w-1/4 font-semibold">Type</span>
                           <select
                             className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                            value={section.type}
-                            onChange={(e) => handleTypeChange(cardIndex, sectionIndex, e.target.value)}
+                            value={button.type}
+                            onChange={(e) => handleTypeChange(cardIndex, buttonIndex, e.target.value)}
                           >
                             <option value="web_url">Web URL</option>
                             <option value="postback">Postback</option>
                           </select>
                         </div>
+
                         {/* Conditionally render fields based on the selected type */}
-                        {section.type === "web_url" ? (
+                        {button.type === 'web_url' ? (
                           <>
                             <div className="flex items-center space-x-2">
-                              <span className="w-1/4 font-semibold">url</span>
+                              <span className="w-1/4 font-semibold">URL</span>
                               <input
                                 type="text"
                                 className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
                                 placeholder="Enter URL"
-                                value={section.url}
+                                value={button.url}
                                 onChange={(e) => {
                                   const updatedCards = cards.map((card, index) => {
                                     if (index === cardIndex) {
-                                      const updatedSections = card.buttonSections.map(
-                                        (section, sIndex) => {
-                                          if (sIndex === sectionIndex) {
-                                            return { ...section, url: e.target.value };
-                                          }
-                                          return section;
+                                      const updatedButtons = card.buttons.map((btn, bIndex) => {
+                                        if (bIndex === buttonIndex) {
+                                          return { ...btn, url: e.target.value };
                                         }
-                                      );
-                                      return { ...card, buttonSections: updatedSections };
+                                        return btn;
+                                      });
+                                      return { ...card, buttons: updatedButtons };
                                     }
                                     return card;
                                   });
@@ -685,24 +351,22 @@ export default function MyTextModal({
                               />
                             </div>
                             <div className="flex items-center space-x-2">
-                              <span className="w-1/4 font-semibold">title</span>
+                              <span className="w-1/4 font-semibold">Title</span>
                               <input
                                 type="text"
                                 className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
                                 placeholder="Enter title"
-                                value={section.title}
+                                value={button.title}
                                 onChange={(e) => {
                                   const updatedCards = cards.map((card, index) => {
                                     if (index === cardIndex) {
-                                      const updatedSections = card.buttonSections.map(
-                                        (section, sIndex) => {
-                                          if (sIndex === sectionIndex) {
-                                            return { ...section, title: e.target.value };
-                                          }
-                                          return section;
+                                      const updatedButtons = card.buttons.map((btn, bIndex) => {
+                                        if (bIndex === buttonIndex) {
+                                          return { ...btn, title: e.target.value };
                                         }
-                                      );
-                                      return { ...card, buttonSections: updatedSections };
+                                        return btn;
+                                      });
+                                      return { ...card, buttons: updatedButtons };
                                     }
                                     return card;
                                   });
@@ -714,24 +378,22 @@ export default function MyTextModal({
                         ) : (
                           <>
                             <div className="flex items-center space-x-2">
-                              <span className="w-1/4 font-semibold">title</span>
+                              <span className="w-1/4 font-semibold">Title</span>
                               <input
                                 type="text"
                                 className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
                                 placeholder="Enter title"
-                                value={section.title}
+                                value={button.title}
                                 onChange={(e) => {
                                   const updatedCards = cards.map((card, index) => {
                                     if (index === cardIndex) {
-                                      const updatedSections = card.buttonSections.map(
-                                        (section, sIndex) => {
-                                          if (sIndex === sectionIndex) {
-                                            return { ...section, title: e.target.value };
-                                          }
-                                          return section;
+                                      const updatedButtons = card.buttons.map((btn, bIndex) => {
+                                        if (bIndex === buttonIndex) {
+                                          return { ...btn, title: e.target.value };
                                         }
-                                      );
-                                      return { ...card, buttonSections: updatedSections };
+                                        return btn;
+                                      });
+                                      return { ...card, buttons: updatedButtons };
                                     }
                                     return card;
                                   });
@@ -740,24 +402,22 @@ export default function MyTextModal({
                               />
                             </div>
                             <div className="flex items-center space-x-2">
-                              <span className="w-1/4 font-semibold">payload</span>
+                              <span className="w-1/4 font-semibold">Payload</span>
                               <input
                                 type="text"
                                 className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
                                 placeholder="Enter payload"
-                                value={section.payload}
+                                value={button.payload}
                                 onChange={(e) => {
                                   const updatedCards = cards.map((card, index) => {
                                     if (index === cardIndex) {
-                                      const updatedSections = card.buttonSections.map(
-                                        (section, sIndex) => {
-                                          if (sIndex === sectionIndex) {
-                                            return { ...section, payload: e.target.value };
-                                          }
-                                          return section;
+                                      const updatedButtons = card.buttons.map((btn, bIndex) => {
+                                        if (bIndex === buttonIndex) {
+                                          return { ...btn, payload: e.target.value };
                                         }
-                                      );
-                                      return { ...card, buttonSections: updatedSections };
+                                        return btn;
+                                      });
+                                      return { ...card, buttons: updatedButtons };
                                     }
                                     return card;
                                   });
@@ -769,10 +429,10 @@ export default function MyTextModal({
                         )}
                       </div>
 
-                      {/* X Button */}
+                      {/* Remove Button */}
                       <button
                         className="bg-red-800 text-white p-1 rounded-full w-6 h-6 flex items-center justify-center ml-2"
-                        onClick={() => handleRemoveButtonSection(cardIndex, sectionIndex)}
+                        onClick={() => handleRemoveButton(cardIndex, buttonIndex)}
                       >
                         X
                       </button>
@@ -784,7 +444,7 @@ export default function MyTextModal({
                 <div className="flex justify-end mt-4">
                   <button
                     className="bg-gray-200 p-2 rounded-full"
-                    onClick={() => handleAddButtonSection(cardIndex)}
+                    onClick={() => handleAddButton(cardIndex)}
                   >
                     <span className="text-black font-bold text-xl">+</span>
                   </button>
@@ -809,7 +469,20 @@ export default function MyTextModal({
             id="genericModalBtnSave"
             disabled={readonly}
             onClick={() => {
-              setValue(JSON.stringify(cards));
+              // Prepare the output to match the desired structure
+              const outputCards = cards.map((card) => {
+                const outputCard: any = {
+                  buttons: card.buttons,
+                  title: card.title,
+                  image_url: card.image_url,
+                  subtitle: card.subtitle,
+                };
+                if (card.showDefaultAction) {
+                  outputCard.default_action = card.default_action;
+                }
+                return outputCard;
+              });
+              setValue(JSON.stringify(outputCards));
               setModalOpen(false);
             }}
             type="submit"

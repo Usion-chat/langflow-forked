@@ -316,7 +316,9 @@ export default function MyTextModal({
                           <select
                             className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
                             value={button.type}
-                            onChange={(e) => handleTypeChange(cardIndex, buttonIndex, e.target.value)}
+                            onChange={(e) =>
+                              handleTypeChange(cardIndex, buttonIndex, e.target.value)
+                            }
                           >
                             <option value="web_url">Web URL</option>
                             <option value="postback">Postback</option>
@@ -472,13 +474,15 @@ export default function MyTextModal({
               // Prepare the output to match the desired structure
               const outputCards = cards.map((card) => {
                 const outputCard: any = {
-                  buttons: card.buttons,
                   title: card.title,
                   image_url: card.image_url,
                   subtitle: card.subtitle,
                 };
                 if (card.showDefaultAction) {
                   outputCard.default_action = card.default_action;
+                }
+                if (card.buttons && card.buttons.length > 0) {
+                  outputCard.buttons = card.buttons;
                 }
                 return outputCard;
               });

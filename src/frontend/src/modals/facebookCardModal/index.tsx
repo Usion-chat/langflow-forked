@@ -27,6 +27,53 @@ export default function MyTextModal({
     },
   ]);
 
+  // useEffect to initialize cards from value when modal opens
+  useEffect(() => {
+    if (modalOpen) {
+      if (value) {
+        try {
+          const parsedValue = JSON.parse(value);
+          setCards(parsedValue);
+        } catch (e) {
+          console.error('Invalid JSON in value:', value);
+          // Handle invalid JSON, set to default state or show error
+          setCards([
+            {
+              buttons: [],
+              title: '',
+              image_url: '',
+              subtitle: '',
+              showDefaultAction: false,
+              default_action: {
+                type: 'web_url',
+                url: '',
+                webview_height_ratio: 'TALL',
+              },
+            },
+          ]);
+        }
+      } else {
+        // If value is empty, set to default state
+        setCards([
+          {
+            buttons: [],
+            title: '',
+            image_url: '',
+            subtitle: '',
+            showDefaultAction: false,
+            default_action: {
+              type: 'web_url',
+              url: '',
+              webview_height_ratio: 'TALL',
+            },
+          },
+        ]);
+      }
+    }
+  }, [value, modalOpen]);
+
+  // The rest of your functions remain the same...
+
   // Function to handle adding a new card
   const handleAddCard = () => {
     const newCard = {

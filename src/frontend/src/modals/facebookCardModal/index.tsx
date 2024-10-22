@@ -33,7 +33,22 @@ export default function MyTextModal({
       if (value) {
         try {
           const parsedValue = JSON.parse(value);
-          setCards(parsedValue);
+
+          // Initialize any missing fields in each card
+          const initializedCards = parsedValue.map((card: any) => ({
+            buttons: card.buttons || [],
+            title: card.title || '',
+            image_url: card.image_url || '',
+            subtitle: card.subtitle || '',
+            showDefaultAction: card.default_action ? true : false,
+            default_action: card.default_action || {
+              type: 'web_url',
+              url: '',
+              webview_height_ratio: 'TALL',
+            },
+          }));
+
+          setCards(initializedCards);
         } catch (e) {
           console.error('Invalid JSON in value:', value);
           // Handle invalid JSON, set to default state or show error
@@ -71,8 +86,6 @@ export default function MyTextModal({
       }
     }
   }, [value, modalOpen]);
-
-  // The rest of your functions remain the same...
 
   // Function to handle adding a new card
   const handleAddCard = () => {
@@ -354,7 +367,7 @@ export default function MyTextModal({
                   <span className="font-semibold">Buttons:</span>
 
                   {/* Dynamically Added Button Fields */}
-                  {card.buttons.map((button, buttonIndex) => (
+                  {card.buttons.map((button: any, buttonIndex: number) => (
                     <div key={buttonIndex} className="flex items-center justify-between">
                       <div className="flex-1">
                         {/* Type Selection */}
@@ -500,7 +513,6 @@ export default function MyTextModal({
                 </div>
               </div>
             ))}
-
             {/* Add Card Button */}
             <div className="flex justify-center mt-4">
               <button className="bg-gray-200 p-3 rounded-full" onClick={handleAddCard}>

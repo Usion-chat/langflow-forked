@@ -1,6 +1,7 @@
-import { cn } from "../../utils/utils";
-import HorizontalScrollFadeComponent from "../horizontalScrollFadeComponent";
-import { Badge } from "../ui/badge";
+import { useEffect, useState } from "react";
+import IconComponent from "../../components/genericIconComponent";
+import { Button } from "../../components/ui/button";
+import BaseModal from "../baseModal";
 
 export function TagsSelector({
   tags,

@@ -37,7 +37,6 @@ class FacebookSendMessage(Component):
             "stamp": stamp
         }
         response = requests.post(url, json=body)
-        print("response.json()", response.json())
         return self.message_data
         # return response.json()
 

@@ -588,6 +588,7 @@ export function getNodeLength(data: NodeDataType) {
         data.node.template[templateField]?.type === "int" ||
         data.node.template[templateField]?.type === "dict" ||
         data.node.template[templateField]?.type === "TestInput" ||
+        data.node.template[templateField]?.type === "FacebookDictModal" ||
         data.node.template[templateField]?.type === "NestedDict"),
   ).length;
 }

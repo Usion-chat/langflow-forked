@@ -15,7 +15,6 @@ from langflow.schema.message import Message
 from langflow.template.field.base import Output
 from langflow.io import MultilineInput
 
-
 class LCModelComponent(Component):
     display_name: str = "Model Name"
     description: str = "Model Description"

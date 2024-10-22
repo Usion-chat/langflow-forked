@@ -397,6 +397,20 @@ class TestInput(BaseInputMixin, ListableInputMixin, MetadataTraceMixin, InputTra
     field_type: SerializableFieldTypes = FieldTypes.TEST_INPUT
     value: dict | Data | None = {}
 
+class FacebookDictModal(BaseInputMixin, ListableInputMixin, MetadataTraceMixin, InputTraceMixin):
+    """
+    Represents a nested dictionary field.
+
+    This class represents a nested dictionary input and provides functionality for handling dictionary values.
+    It inherits from the `BaseInputMixin` and `ListableInputMixin` classes.
+
+    Attributes:
+        field_type (SerializableFieldTypes): The field type of the input. Defaults to FieldTypes.NESTED_DICT.
+        value (Optional[dict]): The value of the input. Defaults to an empty dictionary.
+    """
+
+    field_type: SerializableFieldTypes = FieldTypes.FACEBOOK_DICT_MODAL
+    # value: list | Data | None = []
 
 class DictInput(BaseInputMixin, ListableInputMixin, InputTraceMixin):
     """
@@ -512,6 +526,7 @@ InputTypes = Union[
     MessageTextInput,
     MessageInput,
     TableInput,
+    FacebookDictModal
 ]
 
 InputTypesMap: dict[str, type[InputTypes]] = {t.__name__: t for t in get_args(InputTypes)}

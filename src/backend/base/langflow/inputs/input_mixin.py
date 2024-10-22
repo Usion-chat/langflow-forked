@@ -21,6 +21,7 @@ class FieldTypes(str, Enum):
     PROMPT = "prompt"
     OTHER = "other"
     TABLE = "table"
+    FACEBOOK_DICT_MODAL = "FacebookDictModal"
 
 
 SerializableFieldTypes = Annotated[FieldTypes, PlainSerializer(lambda v: v.value, return_type=str)]

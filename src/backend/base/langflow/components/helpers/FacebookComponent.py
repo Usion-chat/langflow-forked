@@ -1,5 +1,5 @@
 from langflow.custom import Component
-from langflow.io import MessageTextInput, Output, DataInput, TestInput, MultilineInput
+from langflow.io import MessageTextInput, Output, DataInput, TestInput, MultilineInput, FacebookDictModal
 from langflow.inputs.inputs import FieldTypes
 from langflow.schema.message import Message
 from langflow.schema import Data
@@ -14,6 +14,11 @@ class FacebookComponent(Component):
     name = "FacebookComponent"
 
     inputs = [
+        FacebookDictModal(
+            name="page_info",
+            display_name="Page Info",
+            info="Page information.",
+        ),
         TestInput(
             name="test_input",
             display_name="Test Input",

@@ -11,6 +11,7 @@ import IntComponent from "../intComponent";
 import KeypairListComponent from "../keypairListComponent";
 import PromptAreaComponent from "../promptComponent";
 import ToggleShadComponent from "../toggleShadComponent";
+import FacebookDictModal from "../facebookDictModal";
 import { RefreshParameterComponent } from "./component/refreshParameterComponent";
 import { StrRenderComponent } from "./component/strRenderComponent";
 import What from "../testInput";
@@ -82,7 +83,6 @@ export function ParameterRenderComponent({
           <What
             onClick={() => console.log("test input")}
             className="input-component-div">
-            123asd11
           </What>
         )
         : templateData.type === "dict" ? (
@@ -153,6 +153,14 @@ export function ParameterRenderComponent({
             onChange={onChange}
             id={`codearea_${id}`}
           />
+        ) : templateData.type === "FacebookDictModal" ? (
+          <FacebookDictModal
+            value={templateValue}
+            onChange={onChange}
+            editNode={editNode}
+            onClick={() => console.log("test input")}
+            className="input-component-div">
+          </FacebookDictModal>
         ) : templateData.type === "Any" ? (
           <>-</>
         ) : templateData.type === "table" ? (

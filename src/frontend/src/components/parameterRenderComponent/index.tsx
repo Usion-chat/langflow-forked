@@ -12,6 +12,7 @@ import KeypairListComponent from "../keypairListComponent";
 import PromptAreaComponent from "../promptComponent";
 import ToggleShadComponent from "../toggleShadComponent";
 import FacebookDictModal from "../facebookDictModal";
+import FacebookMediaComponent from "../facebookMediaComponent";
 import { RefreshParameterComponent } from "./component/refreshParameterComponent";
 import { StrRenderComponent } from "./component/strRenderComponent";
 import What from "../testInput";
@@ -158,9 +159,15 @@ export function ParameterRenderComponent({
             value={templateValue}
             onChange={onChange}
             editNode={editNode}
-            onClick={() => console.log("test input")}
             className="input-component-div">
           </FacebookDictModal>
+        ) : templateData.type === "FacebookMediaComponent" ? (
+          <FacebookMediaComponent
+            value={templateValue}
+            onChange={onChange}
+            editNode={editNode}
+            className="input-component-div">
+          </FacebookMediaComponent>
         ) : templateData.type === "Any" ? (
           <>-</>
         ) : templateData.type === "table" ? (

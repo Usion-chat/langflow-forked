@@ -19,7 +19,8 @@ from langflow.inputs import (
     StrInput,
     TableInput,
     DefaultPromptField,
-    FacebookDictModal
+    FacebookDictModal,
+    FacebookMediaComponent
 )
 from langflow.template import Output
 
@@ -45,5 +46,6 @@ __all__ = [
     "Output",
     "TableInput",
     "DefaultPromptField",
-    "FacebookDictModal"
+    "FacebookDictModal",
+    "FacebookMediaComponent"
 ]

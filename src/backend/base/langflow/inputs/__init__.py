@@ -20,7 +20,8 @@ from .inputs import (
     SecretStrInput,
     StrInput,
     TableInput,
-    FacebookDictModal
+    FacebookDictModal,
+    FacebookMediaComponent
 )
 
 __all__ = [
@@ -45,5 +46,6 @@ __all__ = [
     "TableInput",
     "Input",
     "DefaultPromptField",
-    "FacebookDictModal"
+    "FacebookDictModal",
+    "FacebookMediaComponent"
 ]

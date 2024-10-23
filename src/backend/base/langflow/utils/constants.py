@@ -63,7 +63,8 @@ DIRECT_TYPES = [
     "code",
     "NestedDict",
     "TestInput",
-    "FacebookDictModal"
+    "FacebookDictModal",
+    "FacebookMediaComponent"
 ]
 
 

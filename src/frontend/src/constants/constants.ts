@@ -651,7 +651,8 @@ export const LANGFLOW_SUPPORTED_TYPES = new Set([
   "NestedDict",
   "TestInput",
   "table",
-  "FacebookDictModal"
+  "FacebookDictModal",
+  "FacebookMediaComponent"
 ]);
 
 export const priorityFields = new Set(["code", "template"]);

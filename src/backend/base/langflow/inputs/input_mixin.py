@@ -22,6 +22,7 @@ class FieldTypes(str, Enum):
     OTHER = "other"
     TABLE = "table"
     FACEBOOK_DICT_MODAL = "FacebookDictModal"
+    FACEBOOK_MEDIA_COMPONENT = "FacebookMediaComponent"
 
 
 SerializableFieldTypes = Annotated[FieldTypes, PlainSerializer(lambda v: v.value, return_type=str)]

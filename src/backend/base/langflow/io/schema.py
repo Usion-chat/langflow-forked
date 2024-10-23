@@ -13,6 +13,7 @@ _convert_field_type_to_type: dict[FieldTypes, type] = {
     FieldTypes.NESTED_DICT: dict,
     FieldTypes.TEST_INPUT: dict,
     FieldTypes.FACEBOOK_DICT_MODAL: list,
+    FieldTypes.FACEBOOK_MEDIA_COMPONENT: list,
     FieldTypes.TABLE: dict,
     FieldTypes.FILE: str,
     FieldTypes.PROMPT: str,

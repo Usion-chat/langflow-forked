@@ -149,7 +149,16 @@ export default function MyTextModal({
       if (index === cardIndex) {
         const updatedButtons = card.buttons.map((button, bIndex) => {
           if (bIndex === buttonIndex) {
-            return { ...button, type: newType };
+            let updatedButton = { ...button, type: newType };
+            // Reset fields based on newType
+            if (newType === 'web_url') {
+              updatedButton = { ...updatedButton, url: '', title: '', payload: undefined };
+            } else if (newType === 'postback') {
+              updatedButton = { ...updatedButton, title: '', payload: '', url: undefined };
+            } else if (newType === 'phone_number') {
+              updatedButton = { ...updatedButton, title: '', payload: '+976', url: undefined };
+            }
+            return updatedButton;
           }
           return button;
         });
@@ -382,113 +391,175 @@ export default function MyTextModal({
                           >
                             <option value="web_url">Web URL</option>
                             <option value="postback">Postback</option>
+                            {/* Added phone_number option */}
+                            <option value="phone_number">Phone Number</option>
                           </select>
                         </div>
 
                         {/* Conditionally render fields based on the selected type */}
-                        {button.type === 'web_url' ? (
-                          <>
-                            <div className="flex items-center space-x-2">
-                              <span className="w-1/4 font-semibold">URL</span>
-                              <input
-                                type="text"
-                                className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                                placeholder="Enter URL"
-                                value={button.url}
-                                onChange={(e) => {
-                                  const updatedCards = cards.map((card, index) => {
-                                    if (index === cardIndex) {
-                                      const updatedButtons = card.buttons.map((btn, bIndex) => {
-                                        if (bIndex === buttonIndex) {
-                                          return { ...btn, url: e.target.value };
+                        {(() => {
+                          if (button.type === 'web_url') {
+                            return (
+                              <>
+                                <div className="flex items-center space-x-2">
+                                  <span className="w-1/4 font-semibold">URL</span>
+                                  <input
+                                    type="text"
+                                    className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
+                                    placeholder="Enter URL"
+                                    value={button.url}
+                                    onChange={(e) => {
+                                      const updatedCards = cards.map((card, index) => {
+                                        if (index === cardIndex) {
+                                          const updatedButtons = card.buttons.map((btn, bIndex) => {
+                                            if (bIndex === buttonIndex) {
+                                              return { ...btn, url: e.target.value };
+                                            }
+                                            return btn;
+                                          });
+                                          return { ...card, buttons: updatedButtons };
                                         }
-                                        return btn;
+                                        return card;
                                       });
-                                      return { ...card, buttons: updatedButtons };
-                                    }
-                                    return card;
-                                  });
-                                  setCards(updatedCards);
-                                }}
-                              />
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <span className="w-1/4 font-semibold">Title</span>
-                              <input
-                                type="text"
-                                className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                                placeholder="Enter title"
-                                value={button.title}
-                                onChange={(e) => {
-                                  const updatedCards = cards.map((card, index) => {
-                                    if (index === cardIndex) {
-                                      const updatedButtons = card.buttons.map((btn, bIndex) => {
-                                        if (bIndex === buttonIndex) {
-                                          return { ...btn, title: e.target.value };
+                                      setCards(updatedCards);
+                                    }}
+                                  />
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <span className="w-1/4 font-semibold">Title</span>
+                                  <input
+                                    type="text"
+                                    className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
+                                    placeholder="Enter title"
+                                    value={button.title}
+                                    onChange={(e) => {
+                                      const updatedCards = cards.map((card, index) => {
+                                        if (index === cardIndex) {
+                                          const updatedButtons = card.buttons.map((btn, bIndex) => {
+                                            if (bIndex === buttonIndex) {
+                                              return { ...btn, title: e.target.value };
+                                            }
+                                            return btn;
+                                          });
+                                          return { ...card, buttons: updatedButtons };
                                         }
-                                        return btn;
+                                        return card;
                                       });
-                                      return { ...card, buttons: updatedButtons };
-                                    }
-                                    return card;
-                                  });
-                                  setCards(updatedCards);
-                                }}
-                              />
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <div className="flex items-center space-x-2">
-                              <span className="w-1/4 font-semibold">Title</span>
-                              <input
-                                type="text"
-                                className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                                placeholder="Enter title"
-                                value={button.title}
-                                onChange={(e) => {
-                                  const updatedCards = cards.map((card, index) => {
-                                    if (index === cardIndex) {
-                                      const updatedButtons = card.buttons.map((btn, bIndex) => {
-                                        if (bIndex === buttonIndex) {
-                                          return { ...btn, title: e.target.value };
+                                      setCards(updatedCards);
+                                    }}
+                                  />
+                                </div>
+                              </>
+                            );
+                          } else if (button.type === 'postback') {
+                            return (
+                              <>
+                                <div className="flex items-center space-x-2">
+                                  <span className="w-1/4 font-semibold">Title</span>
+                                  <input
+                                    type="text"
+                                    className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
+                                    placeholder="Enter title"
+                                    value={button.title}
+                                    onChange={(e) => {
+                                      const updatedCards = cards.map((card, index) => {
+                                        if (index === cardIndex) {
+                                          const updatedButtons = card.buttons.map((btn, bIndex) => {
+                                            if (bIndex === buttonIndex) {
+                                              return { ...btn, title: e.target.value };
+                                            }
+                                            return btn;
+                                          });
+                                          return { ...card, buttons: updatedButtons };
                                         }
-                                        return btn;
+                                        return card;
                                       });
-                                      return { ...card, buttons: updatedButtons };
-                                    }
-                                    return card;
-                                  });
-                                  setCards(updatedCards);
-                                }}
-                              />
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <span className="w-1/4 font-semibold">Payload</span>
-                              <input
-                                type="text"
-                                className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
-                                placeholder="Enter payload"
-                                value={button.payload}
-                                onChange={(e) => {
-                                  const updatedCards = cards.map((card, index) => {
-                                    if (index === cardIndex) {
-                                      const updatedButtons = card.buttons.map((btn, bIndex) => {
-                                        if (bIndex === buttonIndex) {
-                                          return { ...btn, payload: e.target.value };
+                                      setCards(updatedCards);
+                                    }}
+                                  />
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <span className="w-1/4 font-semibold">Payload</span>
+                                  <input
+                                    type="text"
+                                    className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
+                                    placeholder="Enter payload"
+                                    value={button.payload}
+                                    onChange={(e) => {
+                                      const updatedCards = cards.map((card, index) => {
+                                        if (index === cardIndex) {
+                                          const updatedButtons = card.buttons.map((btn, bIndex) => {
+                                            if (bIndex === buttonIndex) {
+                                              return { ...btn, payload: e.target.value };
+                                            }
+                                            return btn;
+                                          });
+                                          return { ...card, buttons: updatedButtons };
                                         }
-                                        return btn;
+                                        return card;
                                       });
-                                      return { ...card, buttons: updatedButtons };
-                                    }
-                                    return card;
-                                  });
-                                  setCards(updatedCards);
-                                }}
-                              />
-                            </div>
-                          </>
-                        )}
+                                      setCards(updatedCards);
+                                    }}
+                                  />
+                                </div>
+                              </>
+                            );
+                          } else if (button.type === 'phone_number') {
+                            return (
+                              <>
+                                {/* Fields for phone_number */}
+                                <div className="flex items-center space-x-2">
+                                  <span className="w-1/4 font-semibold">Title</span>
+                                  <input
+                                    type="text"
+                                    className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
+                                    placeholder="Enter title"
+                                    value={button.title}
+                                    onChange={(e) => {
+                                      const updatedCards = cards.map((card, index) => {
+                                        if (index === cardIndex) {
+                                          const updatedButtons = card.buttons.map((btn, bIndex) => {
+                                            if (bIndex === buttonIndex) {
+                                              return { ...btn, title: e.target.value };
+                                            }
+                                            return btn;
+                                          });
+                                          return { ...card, buttons: updatedButtons };
+                                        }
+                                        return card;
+                                      });
+                                      setCards(updatedCards);
+                                    }}
+                                  />
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <span className="w-1/4 font-semibold">Phone Number</span>
+                                  <input
+                                    type="text"
+                                    className="w-full p-2 border rounded bg-gray-200 h-10 text-black"
+                                    placeholder="Enter phone number"
+                                    value={button.payload}
+                                    onChange={(e) => {
+                                      const updatedCards = cards.map((card, index) => {
+                                        if (index === cardIndex) {
+                                          const updatedButtons = card.buttons.map((btn, bIndex) => {
+                                            if (bIndex === buttonIndex) {
+                                              return { ...btn, payload: e.target.value };
+                                            }
+                                            return btn;
+                                          });
+                                          return { ...card, buttons: updatedButtons };
+                                        }
+                                        return card;
+                                      });
+                                      setCards(updatedCards);
+                                    }}
+                                  />
+                                </div>
+                              </>
+                            );
+                          }
+                        })()}
                       </div>
 
                       {/* Remove Button */}

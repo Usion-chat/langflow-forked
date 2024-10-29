@@ -20,6 +20,7 @@ class ExecuteAction(Component):
             name="data_input",
             display_name="Data",
             info="Data",
+            is_list=True
         ),
         BoolInput(
             name="starts_with",
@@ -32,6 +33,9 @@ class ExecuteAction(Component):
     outputs = [Output(display_name="Data", name="data_output", method="executed_action")]
 
     def executed_action(self) -> Data:
+        # make it first item of self.data_input.value 
+        self.data_input = self.data_input[0]
+
         # Accessing values
         function_name = self.function_name.strip()
         data_function_name = self.data_input.value.get("function", {}).get("name", "").strip()

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import JsonView from "react18-json-view";
 import "react18-json-view/src/dark.css";
 import "react18-json-view/src/style.css";
-import IconComponent from "../../components/genericIconComponent";
+import IconComponent from "../../components/common/genericIconComponent";
 import { CODE_DICT_DIALOG_SUBTITLE } from "../../constants/constants";
 import { useDarkStore } from "../../stores/darkStore";
 import BaseModal from "../baseModal";
@@ -66,8 +66,6 @@ export default function DictAreaModal({
       <div className="flex h-full w-full flex-col transition-all">
         <JsonView
           theme="vscode"
-          dark={isDark}
-          className={!isDark ? "json-view-white" : "json-view-dark"}
           editable={!!onChange}
           enableClipboard
           onChange={handleJsonChange}
@@ -86,7 +84,9 @@ export default function DictAreaModal({
       setOpen={setOpen}
       onSubmit={onChange ? handleSubmit : undefined}
     >
-      <BaseModal.Trigger className="h-full">{children}</BaseModal.Trigger>
+      <BaseModal.Trigger className="h-full" asChild>
+        {children}
+      </BaseModal.Trigger>
       {renderHeader()}
       {renderContent()}
       <BaseModal.Footer submit={onChange ? { label: "Save" } : undefined} />

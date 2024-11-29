@@ -3,8 +3,8 @@ import useAlertStore from "@/stores/alertStore";
 import useFlowStore from "@/stores/flowStore";
 import { cloneDeep } from "lodash";
 import { useEffect, useState } from "react";
-import EditFlowSettings from "../../components/editFlowSettingsComponent";
-import IconComponent from "../../components/genericIconComponent";
+import IconComponent from "../../components/common/genericIconComponent";
+import EditFlowSettings from "../../components/core/editFlowSettingsComponent";
 import { SETTINGS_DIALOG_SUBTITLE } from "../../constants/constants";
 import useFlowsManagerStore from "../../stores/flowsManagerStore";
 import { FlowSettingsPropsType } from "../../types/components";
@@ -65,8 +65,7 @@ export default function FlowSettingsModal({
     if (flows) {
       const tempNameList: string[] = [];
       flows.forEach((flow: FlowType) => {
-        if ((flow.is_component ?? false) === false)
-          tempNameList.push(flow.name);
+        tempNameList.push(flow.name);
       });
       setNameList(tempNameList.filter((name) => name !== currentFlow!.name));
     }

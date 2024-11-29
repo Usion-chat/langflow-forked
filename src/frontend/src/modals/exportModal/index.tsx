@@ -1,7 +1,8 @@
+import { track } from "@/customization/utils/analytics";
 import useFlowStore from "@/stores/flowStore";
 import { ReactNode, forwardRef, useEffect, useState } from "react";
-import EditFlowSettings from "../../components/editFlowSettingsComponent";
-import IconComponent from "../../components/genericIconComponent";
+import IconComponent from "../../components/common/genericIconComponent";
+import EditFlowSettings from "../../components/core/editFlowSettingsComponent";
 import { Checkbox } from "../../components/ui/checkbox";
 import { API_WARNING_NOTICE_ALERT } from "../../constants/alerts_constants";
 import {
@@ -66,6 +67,7 @@ const ExportModal = forwardRef(
               description,
             );
           setOpen(false);
+          track("Flow Exported", { flowId: currentFlow!.id });
         }}
       >
         <BaseModal.Trigger asChild>{props.children}</BaseModal.Trigger>

@@ -306,6 +306,63 @@ export default function StorePage(): JSX.Element {
     //             </>
     //           )}
     //         </span>
+          <div className="flex items-center gap-2">
+            <Select
+              disabled={loading}
+              onValueChange={setSelectFilter}
+              value={selectFilter}
+            >
+              <SelectTrigger className="mr-4 w-[160px] flex-shrink-0">
+                <SelectValue placeholder="Filter Values" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem
+                    disabled={!hasApiKey || !validApiKey}
+                    value="createdbyme"
+                  >
+                    Created By Me
+                  </SelectItem>
+                  <SelectItem
+                    disabled={!hasApiKey || !validApiKey}
+                    value="likedbyme"
+                  >
+                    Liked By Me
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {id === undefined ? (
+              <TagsSelector
+                tags={tags ?? []}
+                loadingTags={false}
+                disabled={loading}
+                selectedTags={filteredCategories}
+                setSelectedTags={setFilterCategories}
+              />
+            ) : (
+              <Badge
+                key="id"
+                variant="outline"
+                size="sq"
+                className="gap-2 bg-beta-foreground text-background hover:bg-beta-foreground"
+              >
+                <CustomLink to={"/store"} className="cursor-pointer">
+                  <IconComponent name="X" className="h-4 w-4" />
+                </CustomLink>
+                {id}
+              </Badge>
+            )}
+          </div>
+          <div className="flex items-end justify-between">
+            <span className="px-0.5 text-sm text-muted-foreground">
+              {(!loading || searchData.length !== 0) && (
+                <>
+                  {totalRowsCount} {totalRowsCount !== 1 ? "results" : "result"}
+                </>
+              )}
+            </span>
 
     //         <Select
     //           disabled={loading}
@@ -387,5 +444,45 @@ export default function StorePage(): JSX.Element {
     //     )}
     //   </div>
     // </PageLayout>
+          {!loading && searchData?.length === 0 && (
+            <div className="mt-6 flex w-full items-center justify-center text-center">
+              <div className="flex h-full w-full flex-col">
+                <div className="flex w-full flex-col gap-4">
+                  <div className="grid w-full gap-4">
+                    {selectFilter != "all" ? (
+                      <>
+                        You haven't{" "}
+                        {selectFilter === "createdbyme" ? "created" : "liked"}{" "}
+                        anything with the selected filters yet.
+                      </>
+                    ) : (
+                      <>
+                        There are no{" "}
+                        {tabActive == "Flows" ? "Flows" : "Components"} with the
+                        selected filters.
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        {!loading && searchData.length > 0 && (
+          <div className="relative py-6">
+            <PaginatorComponent
+              pageIndex={pageIndex}
+              pageSize={pageSize}
+              rowsCount={STORE_PAGINATION_ROWS_COUNT}
+              totalRowsCount={totalRowsCount}
+              paginate={(pageIndex, pageSize) => {
+                setPageIndex(pageIndex);
+                setPageSize(pageSize);
+              }}
+            ></PaginatorComponent>
+          </div>
+        )}
+      </div>
+    </PageLayout>
   );
 }

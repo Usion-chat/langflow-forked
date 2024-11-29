@@ -1,10 +1,10 @@
-from langflow.components.data.File import FileComponent
-from langflow.components.helpers.ParseData import ParseDataComponent
-from langflow.components.inputs.ChatInput import ChatInput
-from langflow.components.models.OpenAIModel import OpenAIModelComponent
-from langflow.components.outputs.ChatOutput import ChatOutput
-from langflow.components.prompts.Prompt import PromptComponent
-from langflow.graph.graph.base import Graph
+from langflow.components.data import FileComponent
+from langflow.components.inputs import ChatInput
+from langflow.components.models import OpenAIModelComponent
+from langflow.components.outputs import ChatOutput
+from langflow.components.processing import ParseDataComponent
+from langflow.components.prompts import PromptComponent
+from langflow.graph import Graph
 
 
 def document_qa_graph(template: str | None = None):
@@ -24,7 +24,7 @@ Answer:
 """
     file_component = FileComponent()
     parse_data_component = ParseDataComponent()
-    parse_data_component.set(data=file_component.load_file)
+    parse_data_component.set(data=file_component.load_files)
 
     chat_input = ChatInput()
     prompt_component = PromptComponent()
@@ -40,5 +40,4 @@ Answer:
     chat_output = ChatOutput()
     chat_output.set(input_value=openai_component.text_response)
 
-    graph = Graph(start=chat_input, end=chat_output)
-    return graph
+    return Graph(start=chat_input, end=chat_output)

@@ -1,21 +1,29 @@
-import IconComponent from "../../../../components/genericIconComponent";
+import IconComponent, {
+  ForwardedIconComponent,
+} from "../../../../components/common/genericIconComponent";
 import { Button } from "../../../../components/ui/button";
 
+import Dropdown from "@/components/core/dropdownComponent";
+import GlobalVariableModal from "@/components/core/GlobalVariableModal/GlobalVariableModal";
+import TableComponent from "@/components/core/parameterRenderComponent/components/tableComponent";
 import {
   useDeleteGlobalVariables,
   useGetGlobalVariables,
 } from "@/controllers/API/queries/variables";
-import { ColDef, ColGroupDef, SelectionChangedEvent } from "ag-grid-community";
-import { useState } from "react";
-import AddNewVariableButton from "../../../../components/addNewVariableButtonComponent/addNewVariableButton";
-import Dropdown from "../../../../components/dropdownComponent";
-import ForwardedIconComponent from "../../../../components/genericIconComponent";
-import TableComponent from "../../../../components/tableComponent";
+import { GlobalVariable } from "@/types/global_variables";
+import {
+  ColDef,
+  RowClickedEvent,
+  SelectionChangedEvent,
+} from "ag-grid-community";
+import { useRef, useState } from "react";
 import { Badge } from "../../../../components/ui/badge";
 import useAlertStore from "../../../../stores/alertStore";
 
 export default function GlobalVariablesPage() {
   const setErrorData = useAlertStore((state) => state.setErrorData);
+  const [openModal, setOpenModal] = useState(false);
+  const initialData = useRef<GlobalVariable | undefined>(undefined);
   const BadgeRenderer = (props) => {
     return props.value !== "" ? (
       <div>
@@ -36,7 +44,7 @@ export default function GlobalVariablesPage() {
     );
   };
   // Column Definitions: Defines the columns to be displayed.
-  const [colDefs, setColDefs] = useState<(ColDef<any> | ColGroupDef<any>)[]>([
+  const colDefs: ColDef[] = [
     {
       headerName: "Variable Name",
       field: "name",
@@ -51,25 +59,20 @@ export default function GlobalVariablesPage() {
         options: ["Generic", "Credential"],
       },
       flex: 1,
-      editable: false,
     },
-    // {
-    //   field: "value",
-    //   cellEditor: "agLargeTextCellEditor",
-    //   flex: 2,
-    //   editable: false,
-    // },
+    {
+      field: "value",
+    },
     {
       headerName: "Apply To Fields",
       field: "default_fields",
       valueFormatter: (params) => {
-        return params.value.join(", ");
+        return params.value?.join(", ") ?? "";
       },
       flex: 1,
-      editable: false,
       resizable: false,
     },
-  ]);
+  ];
 
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
@@ -93,6 +96,11 @@ export default function GlobalVariablesPage() {
     });
   }
 
+  function updateVariables(event: RowClickedEvent<GlobalVariable>) {
+    initialData.current = event.data;
+    setOpenModal(true);
+  }
+
   return (
     <div className="flex h-full w-full flex-col justify-between gap-6">
       <div className="flex w-full items-start justify-between gap-6">
@@ -109,12 +117,12 @@ export default function GlobalVariablesPage() {
           </p>
         </div>
         <div className="flex flex-shrink-0 items-center gap-2">
-          <AddNewVariableButton asChild>
+          <GlobalVariableModal asChild>
             <Button data-testid="api-key-button-store" variant="primary">
               <IconComponent name="Plus" className="w-4" />
               Add New
             </Button>
-          </AddNewVariableButton>
+          </GlobalVariableModal>
         </div>
       </div>
 
@@ -126,12 +134,21 @@ export default function GlobalVariablesPage() {
             setSelectedRows(event.api.getSelectedRows().map((row) => row.name));
           }}
           rowSelection="multiple"
+          onRowClicked={updateVariables}
           suppressRowClickSelection={true}
           pagination={true}
           columnDefs={colDefs}
           rowData={globalVariables ?? []}
           onDelete={removeVariables}
         />
+        {initialData.current && (
+          <GlobalVariableModal
+            key={initialData.current.id}
+            initialData={initialData.current}
+            open={openModal}
+            setOpen={setOpenModal}
+          />
+        )}
       </div>
     </div>
   );

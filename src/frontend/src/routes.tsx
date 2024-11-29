@@ -135,6 +135,14 @@ const router = createBrowserRouter(
                   }
                 />
                 <Route
+                  path="storee"
+                  element={
+                    <StoreGuard>
+                      <StorePage />
+                    </StoreGuard>
+                  }
+                />
+                <Route
                   path="store/:id/"
                   element={
                     <StoreGuard>

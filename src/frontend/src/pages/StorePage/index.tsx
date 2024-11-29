@@ -66,24 +66,24 @@ export default function StorePage(): JSX.Element {
   const navigate = useCustomNavigate();
 
   useEffect(() => {
-    if (!loadingApiKey) {
-      if (!hasApiKey) {
-        setErrorData({
-          title: APIKEY_ERROR_ALERT,
-          list: [NOAPI_ERROR_ALERT],
-        });
-        setLoading(false);
-      } else if (!validApiKey) {
-        setErrorData({
-          title: APIKEY_ERROR_ALERT,
-          list: [INVALID_API_ERROR_ALERT],
-        });
-      }
-    }
+    // if (!loadingApiKey) {
+    //   if (!hasApiKey) {
+    //     setErrorData({
+    //       title: APIKEY_ERROR_ALERT,
+    //       list: [NOAPI_ERROR_ALERT],
+    //     });
+    //     setLoading(false);
+    //   } else if (!validApiKey) {
+    //     setErrorData({
+    //       title: APIKEY_ERROR_ALERT,
+    //       list: [INVALID_API_ERROR_ALERT],
+    //     });
+    //   }
+    // }
   }, [loadingApiKey, validApiKey, hasApiKey, currentFlowId]);
 
   useEffect(() => {
-    handleGetComponents();
+    // handleGetComponents();
   }, [
     tabActive,
     pageOrder,
@@ -153,238 +153,239 @@ export default function StorePage(): JSX.Element {
   }
 
   return (
-    <PageLayout
-      betaIcon
-      title={STORE_TITLE}
-      description={STORE_DESC}
-      button={
-        <Button
-          data-testid="api-key-button-store"
-          disabled={loading}
-          className={cn(
-            `${!validApiKey ? "animate-pulse border-error" : ""}`,
-            loading ? "cursor-not-allowed" : "",
-          )}
-          variant="primary"
-          onClick={() => {
-            navigate("/settings/general/api");
-          }}
-        >
-          <IconComponent name="Key" className="mr-2 w-4" />
-          API Key
-        </Button>
-      }
-    >
-      <div className="flex h-full w-full flex-col justify-between">
-        <div className="flex w-full flex-col gap-4 p-0">
-          <div className="flex items-end gap-4">
-            <InputSearchComponent
-              loading={loading}
-              divClasses="relative h-12 w-[40%]"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  setSearchNow(uniqueId());
-                }
-              }}
-              onClick={() => {
-                setSearchNow(uniqueId());
-              }}
-            />
-            <div className="ml-4 flex w-full gap-2 border-b border-border">
-              <button
-                data-testid="all-button-store"
-                disabled={loading}
-                onClick={() => {
-                  setTabActive("All");
-                }}
-                className={
-                  (tabActive === "All"
-                    ? "border-b-2 border-primary p-3"
-                    : "border-b-2 border-transparent p-3 text-muted-foreground hover:text-primary") +
-                  (loading ? " cursor-not-allowed" : "")
-                }
-              >
-                All
-              </button>
-              <button
-                data-testid="flows-button-store"
-                disabled={loading}
-                onClick={() => {
-                  resetPagination();
-                  setTabActive("Flows");
-                }}
-                className={
-                  (tabActive === "Flows"
-                    ? "border-b-2 border-primary p-3"
-                    : "border-b-2 border-transparent p-3 text-muted-foreground hover:text-primary") +
-                  (loading ? " cursor-not-allowed" : "")
-                }
-              >
-                Flows
-              </button>
-              <button
-                data-testid="components-button-store"
-                disabled={loading}
-                onClick={() => {
-                  resetPagination();
-                  setTabActive("Components");
-                }}
-                className={
-                  (tabActive === "Components"
-                    ? "border-b-2 border-primary p-3"
-                    : "border-b-2 border-transparent p-3 text-muted-foreground hover:text-primary") +
-                  (loading ? " cursor-not-allowed" : "")
-                }
-              >
-                Components
-              </button>
-              <ShadTooltip content="Coming Soon">
-                <button className="cursor-not-allowed p-3 text-muted-foreground">
-                  Bundles
-                </button>
-              </ShadTooltip>
-            </div>
-          </div>
+    <>Hello</>
+    // <PageLayout
+    //   betaIcon
+    //   title={STORE_TITLE}
+    //   description={STORE_DESC}
+    //   button={
+    //     <Button
+    //       data-testid="api-key-button-store"
+    //       disabled={loading}
+    //       className={cn(
+    //         `${!validApiKey ? "animate-pulse border-error" : ""}`,
+    //         loading ? "cursor-not-allowed" : "",
+    //       )}
+    //       variant="primary"
+    //       onClick={() => {
+    //         navigate("/settings/general/api");
+    //       }}
+    //     >
+    //       <IconComponent name="Key" className="mr-2 w-4" />
+    //       API Key
+    //     </Button>
+    //   }
+    // >
+    //   <div className="flex h-full w-full flex-col justify-between">
+    //     <div className="flex w-full flex-col gap-4 p-0">
+    //       <div className="flex items-end gap-4">
+    //         <InputSearchComponent
+    //           loading={loading}
+    //           divClasses="relative h-12 w-[40%]"
+    //           value={inputText}
+    //           onChange={(e) => setInputText(e.target.value)}
+    //           onKeyDown={(e) => {
+    //             if (e.key === "Enter") {
+    //               setSearchNow(uniqueId());
+    //             }
+    //           }}
+    //           onClick={() => {
+    //             setSearchNow(uniqueId());
+    //           }}
+    //         />
+    //         <div className="ml-4 flex w-full gap-2 border-b border-border">
+    //           <button
+    //             data-testid="all-button-store"
+    //             disabled={loading}
+    //             onClick={() => {
+    //               setTabActive("All");
+    //             }}
+    //             className={
+    //               (tabActive === "All"
+    //                 ? "border-b-2 border-primary p-3"
+    //                 : "border-b-2 border-transparent p-3 text-muted-foreground hover:text-primary") +
+    //               (loading ? " cursor-not-allowed" : "")
+    //             }
+    //           >
+    //             All
+    //           </button>
+    //           <button
+    //             data-testid="flows-button-store"
+    //             disabled={loading}
+    //             onClick={() => {
+    //               resetPagination();
+    //               setTabActive("Flows");
+    //             }}
+    //             className={
+    //               (tabActive === "Flows"
+    //                 ? "border-b-2 border-primary p-3"
+    //                 : "border-b-2 border-transparent p-3 text-muted-foreground hover:text-primary") +
+    //               (loading ? " cursor-not-allowed" : "")
+    //             }
+    //           >
+    //             Flows
+    //           </button>
+    //           <button
+    //             data-testid="components-button-store"
+    //             disabled={loading}
+    //             onClick={() => {
+    //               resetPagination();
+    //               setTabActive("Components");
+    //             }}
+    //             className={
+    //               (tabActive === "Components"
+    //                 ? "border-b-2 border-primary p-3"
+    //                 : "border-b-2 border-transparent p-3 text-muted-foreground hover:text-primary") +
+    //               (loading ? " cursor-not-allowed" : "")
+    //             }
+    //           >
+    //             Components
+    //           </button>
+    //           <ShadTooltip content="Coming Soon">
+    //             <button className="cursor-not-allowed p-3 text-muted-foreground">
+    //               Bundles
+    //             </button>
+    //           </ShadTooltip>
+    //         </div>
+    //       </div>
 
-          <div className="flex items-center gap-2">
-            <Select
-              disabled={loading}
-              onValueChange={setSelectFilter}
-              value={selectFilter}
-            >
-              <SelectTrigger className="mr-4 w-[160px] flex-shrink-0">
-                <SelectValue placeholder="Filter Values" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem
-                    disabled={!hasApiKey || !validApiKey}
-                    value="createdbyme"
-                  >
-                    Created By Me
-                  </SelectItem>
-                  <SelectItem
-                    disabled={!hasApiKey || !validApiKey}
-                    value="likedbyme"
-                  >
-                    Liked By Me
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            {id === undefined ? (
-              <TagsSelector
-                tags={data ?? []}
-                loadingTags={isFetching}
-                disabled={loading}
-                selectedTags={filteredCategories}
-                setSelectedTags={setFilterCategories}
-              />
-            ) : (
-              <Badge
-                key="id"
-                variant="outline"
-                size="sq"
-                className="gap-2 bg-beta-foreground text-background hover:bg-beta-foreground"
-              >
-                <CustomLink to={"/store"} className="cursor-pointer">
-                  <IconComponent name="X" className="h-4 w-4" />
-                </CustomLink>
-                {id}
-              </Badge>
-            )}
-          </div>
-          <div className="flex items-end justify-between">
-            <span className="px-0.5 text-sm text-muted-foreground">
-              {(!loading || searchData.length !== 0) && (
-                <>
-                  {totalRowsCount} {totalRowsCount !== 1 ? "results" : "result"}
-                </>
-              )}
-            </span>
+    //       <div className="flex items-center gap-2">
+    //         <Select
+    //           disabled={loading}
+    //           onValueChange={setSelectFilter}
+    //           value={selectFilter}
+    //         >
+    //           <SelectTrigger className="mr-4 w-[160px] flex-shrink-0">
+    //             <SelectValue placeholder="Filter Values" />
+    //           </SelectTrigger>
+    //           <SelectContent>
+    //             <SelectGroup>
+    //               <SelectItem value="all">All</SelectItem>
+    //               <SelectItem
+    //                 disabled={!hasApiKey || !validApiKey}
+    //                 value="createdbyme"
+    //               >
+    //                 Created By Me
+    //               </SelectItem>
+    //               <SelectItem
+    //                 disabled={!hasApiKey || !validApiKey}
+    //                 value="likedbyme"
+    //               >
+    //                 Liked By Me
+    //               </SelectItem>
+    //             </SelectGroup>
+    //           </SelectContent>
+    //         </Select>
+    //         {id === undefined ? (
+    //           <TagsSelector
+    //             tags={data ?? []}
+    //             loadingTags={isFetching}
+    //             disabled={loading}
+    //             selectedTags={filteredCategories}
+    //             setSelectedTags={setFilterCategories}
+    //           />
+    //         ) : (
+    //           <Badge
+    //             key="id"
+    //             variant="outline"
+    //             size="sq"
+    //             className="gap-2 bg-beta-foreground text-background hover:bg-beta-foreground"
+    //           >
+    //             <CustomLink to={"/store"} className="cursor-pointer">
+    //               <IconComponent name="X" className="h-4 w-4" />
+    //             </CustomLink>
+    //             {id}
+    //           </Badge>
+    //         )}
+    //       </div>
+    //       <div className="flex items-end justify-between">
+    //         <span className="px-0.5 text-sm text-muted-foreground">
+    //           {(!loading || searchData.length !== 0) && (
+    //             <>
+    //               {totalRowsCount} {totalRowsCount !== 1 ? "results" : "result"}
+    //             </>
+    //           )}
+    //         </span>
 
-            <Select
-              disabled={loading}
-              onValueChange={(e) => {
-                setPageOrder(e);
-              }}
-            >
-              <SelectTrigger data-testid="select-order-store">
-                <SelectValue placeholder="Popular" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Popular">Popular</SelectItem>
-                {/* <SelectItem value="Recent">Most Recent</SelectItem> */}
-                <SelectItem value="Alphabetical">Alphabetical</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+    //         <Select
+    //           disabled={loading}
+    //           onValueChange={(e) => {
+    //             setPageOrder(e);
+    //           }}
+    //         >
+    //           <SelectTrigger data-testid="select-order-store">
+    //             <SelectValue placeholder="Popular" />
+    //           </SelectTrigger>
+    //           <SelectContent>
+    //             <SelectItem value="Popular">Popular</SelectItem>
+    //             {/* <SelectItem value="Recent">Most Recent</SelectItem> */}
+    //             <SelectItem value="Alphabetical">Alphabetical</SelectItem>
+    //           </SelectContent>
+    //         </Select>
+    //       </div>
 
-          <div className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {!loading || searchData.length !== 0 ? (
-              searchData.map((item) => {
-                return (
-                  <>
-                    <StoreCardComponent
-                      key={item.id}
-                      data={item}
-                      authorized={validApiKey}
-                      disabled={loading}
-                    />
-                  </>
-                );
-              })
-            ) : (
-              <>
-                <SkeletonCardComponent />
-                <SkeletonCardComponent />
-                <SkeletonCardComponent />
-              </>
-            )}
-          </div>
+    //       <div className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">
+    //         {!loading || searchData.length !== 0 ? (
+    //           searchData.map((item) => {
+    //             return (
+    //               <>
+    //                 <StoreCardComponent
+    //                   key={item.id}
+    //                   data={item}
+    //                   authorized={validApiKey}
+    //                   disabled={loading}
+    //                 />
+    //               </>
+    //             );
+    //           })
+    //         ) : (
+    //           <>
+    //             <SkeletonCardComponent />
+    //             <SkeletonCardComponent />
+    //             <SkeletonCardComponent />
+    //           </>
+    //         )}
+    //       </div>
 
-          {!loading && searchData?.length === 0 && (
-            <div className="mt-6 flex w-full items-center justify-center text-center">
-              <div className="flex h-full w-full flex-col">
-                <div className="flex w-full flex-col gap-4">
-                  <div className="grid w-full gap-4">
-                    {selectFilter != "all" ? (
-                      <>
-                        You haven't{" "}
-                        {selectFilter === "createdbyme" ? "created" : "liked"}{" "}
-                        anything with the selected filters yet.
-                      </>
-                    ) : (
-                      <>
-                        There are no{" "}
-                        {tabActive == "Flows" ? "Flows" : "Components"} with the
-                        selected filters.
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-        {!loading && searchData.length > 0 && (
-          <div className="relative py-6">
-            <PaginatorComponent
-              storeComponent={true}
-              pageIndex={pageIndex}
-              pageSize={pageSize}
-              totalRowsCount={totalRowsCount}
-              paginate={(pageSize, pageIndex) => {
-                setPageIndex(pageIndex);
-                setPageSize(pageSize);
-              }}
-            ></PaginatorComponent>
-          </div>
-        )}
-      </div>
-    </PageLayout>
+    //       {!loading && searchData?.length === 0 && (
+    //         <div className="mt-6 flex w-full items-center justify-center text-center">
+    //           <div className="flex h-full w-full flex-col">
+    //             <div className="flex w-full flex-col gap-4">
+    //               <div className="grid w-full gap-4">
+    //                 {selectFilter != "all" ? (
+    //                   <>
+    //                     You haven't{" "}
+    //                     {selectFilter === "createdbyme" ? "created" : "liked"}{" "}
+    //                     anything with the selected filters yet.
+    //                   </>
+    //                 ) : (
+    //                   <>
+    //                     There are no{" "}
+    //                     {tabActive == "Flows" ? "Flows" : "Components"} with the
+    //                     selected filters.
+    //                   </>
+    //                 )}
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       )}
+    //     </div>
+    //     {!loading && searchData.length > 0 && (
+    //       <div className="relative py-6">
+    //         <PaginatorComponent
+    //           storeComponent={true}
+    //           pageIndex={pageIndex}
+    //           pageSize={pageSize}
+    //           totalRowsCount={totalRowsCount}
+    //           paginate={(pageSize, pageIndex) => {
+    //             setPageIndex(pageIndex);
+    //             setPageSize(pageSize);
+    //           }}
+    //         ></PaginatorComponent>
+    //       </div>
+    //     )}
+    //   </div>
+    // </PageLayout>
   );
 }
